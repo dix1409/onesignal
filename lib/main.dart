@@ -1,6 +1,9 @@
 import 'package:compareprivateplanesapp/pages/aircraft.dart';
 import 'package:compareprivateplanesapp/pages/articles.dart';
 import 'package:compareprivateplanesapp/pages/home.dart';
+import 'package:compareprivateplanesapp/pages/main_aircraft.dart';
+import 'package:compareprivateplanesapp/pages/main_articles.dart';
+import 'package:compareprivateplanesapp/pages/main_premium.dart';
 import 'package:compareprivateplanesapp/pages/premium.dart';
 import 'package:compareprivateplanesapp/pages/settings.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +38,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
-  List<Widget> pages = <Widget>[Home(),AirCraft(),Articles(),Premium(),Settings()];
+  List<Widget> pages = <Widget>[Home(),MainAircraft(),MainArticles(),MainPremium(),Settings()];
 
 
   @override
@@ -59,15 +62,13 @@ class _MyHomePageState extends State<MyHomePage> {
           height: MediaQuery.of(context).padding.top,
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          pages[_selectedIndex],
-        ],
+      body: Center(
+        child: pages[_selectedIndex],
+
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
-          BottomNavigationBarItem(icon: Image.asset("icons/home_icon.png",width: 30,height: 30,semanticLabel: "Home"),label: "Home",backgroundColor: Colors.white,tooltip: "Home"),
+          BottomNavigationBarItem(icon: Image.asset("icons/home_icon.png",width: 30,height: 30),label: "Home"),
           BottomNavigationBarItem(icon: Image.asset("icons/aircraft_icon.png",width: 30,height: 30,), label: "AirCraft" ),
           BottomNavigationBarItem(icon: Image.asset("icons/articles_icon.png",width: 30,height: 30,), label: "Articles"),
           BottomNavigationBarItem(icon: Image.asset("icons/premium_icon.png",width: 30,height: 30,), label: "Premium"),

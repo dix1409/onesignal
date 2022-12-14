@@ -11,28 +11,11 @@ class Articles extends StatefulWidget {
 }
 
 class _ArticlesState extends State<Articles> {
-  final myController = TextEditingController();
-
-  Article article1 = Article(imagePath: "assets/images/all_articles_page_cesna.png", articleTitle: "Cessna Citation Family of Private Jets");
-  Article article2 = Article(imagePath: "assets/images/all_articles_page_your_guide.png", articleTitle: "Your Guide to Private Jet Bathrooms");
-  Article article3 = Article(imagePath: "assets/images/all_articles_page_private_jet.png", articleTitle: "Private Jet Onboard Catering");
-  Article article4 = Article(imagePath: "assets/images/home_page_about_contact_image.png", articleTitle: "Tools");
-
-
-  String searchString = "";
-
+  bool isLoading=true;
 
   @override
   Widget build(BuildContext context) {
     WebViewController _controller;
-
-
-    List<Article> articleList = <Article>[];
-    articleList.add(article1);
-    articleList.add(article2);
-    articleList.add(article3);
-    articleList.add(article4);
-
 
     return  Scaffold(
         appBar: PreferredSize(
@@ -41,7 +24,7 @@ class _ArticlesState extends State<Articles> {
             height: MediaQuery.of(context).padding.top,
           ),
         ),
-        body: Column(
+        body: Stack(
           children: [
             Expanded(
               child: WebView(
@@ -50,8 +33,15 @@ class _ArticlesState extends State<Articles> {
                 onWebViewCreated: (WebViewController webViewController) {
                   _controller = webViewController;
                 },
+                onPageFinished: (url) {
+                  setState(() {
+                    isLoading = false;
+                  });
+                },
               ),
             ),
+            isLoading ? Center( child: CircularProgressIndicator(),)
+                : Stack(),
           ],
         )
     );

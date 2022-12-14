@@ -1,19 +1,20 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class FreeToolsPage extends StatefulWidget {
-  const FreeToolsPage({Key? key}) : super(key: key);
+class MainAircraft extends StatefulWidget {
+  const MainAircraft({Key? key}) : super(key: key);
 
   @override
-  State<FreeToolsPage> createState() => _FreeToolsPageState();
+  State<MainAircraft> createState() => _MainAircraftState();
 }
 
-class _FreeToolsPageState extends State<FreeToolsPage> {
+class _MainAircraftState extends State<MainAircraft> {
   bool isLoading=true;
-
   @override
   Widget build(BuildContext context) {
     WebViewController _controller;
+
 
     return Scaffold(
         appBar: PreferredSize(
@@ -26,7 +27,7 @@ class _FreeToolsPageState extends State<FreeToolsPage> {
           children: [
             Expanded(
               child: WebView(
-                initialUrl: 'https://compareprivateplanes.com/private-jet-free-tools',
+                initialUrl: 'https://compareprivateplanes.com/find',
                 javascriptMode: JavascriptMode.unrestricted,
                 onWebViewCreated: (WebViewController webViewController) {
                   _controller = webViewController;

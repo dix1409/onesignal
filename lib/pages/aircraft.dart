@@ -13,7 +13,7 @@ class AirCraft extends StatefulWidget {
 }
 
 class _AirCraftState extends State<AirCraft> {
-
+  bool isLoading=true;
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _AirCraftState extends State<AirCraft> {
             height: MediaQuery.of(context).padding.top,
           ),
         ),
-      body: Column(
+      body: Stack(
         children: [
           Expanded(
             child: WebView(
@@ -41,8 +41,15 @@ class _AirCraftState extends State<AirCraft> {
                   onWebViewCreated: (WebViewController webViewController) {
                     _controller = webViewController;
                     },
+              onPageFinished: (finish) {
+                setState(() {
+                  isLoading = false;
+                });
+              },
             ),
           ),
+          isLoading ? Center( child: CircularProgressIndicator(),)
+              : Stack(),
         ],
       )
     );

@@ -2,6 +2,7 @@ import 'package:compareprivateplanesapp/pages/FreeTools.dart';
 import 'package:compareprivateplanesapp/pages/about.dart';
 import 'package:compareprivateplanesapp/pages/aircraft.dart';
 import 'package:compareprivateplanesapp/pages/articles.dart';
+import 'package:compareprivateplanesapp/pages/premium.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -32,7 +33,7 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
-                Align(alignment: Alignment.center,child: Image.asset("assets/images/cpp_logo.png"))
+                Align(alignment: Alignment.center,child: Image.asset("assets/images/crooped_logo.png",height: 120,width: 120,))
               ],
             ),
           ),
@@ -51,21 +52,26 @@ class _HomeState extends State<Home> {
                 child: SizedBox(
                   width: 180,
                   height: 180,
-                  child: Stack(
-                    children: [
-                      Image.asset("assets/images/home_page_premium_image.png"),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 90.0, left: 15.0),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text("Premium",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20)),
+                  child: GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Premium(),));
+                    },
+                    child: Stack(
+                      children: [
+                        Image.asset("assets/images/home_page_premium_image.png"),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 90.0, left: 15.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text("Premium",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20)),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

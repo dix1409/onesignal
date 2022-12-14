@@ -80,15 +80,27 @@ class AboutPage extends StatefulWidget {
 }
 
 class _AboutPageState extends State<AboutPage> {
+  bool isLoading=true;
+
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: WebView(
-        initialUrl: "https://compareprivateplanes.com/about",
-        javascriptMode: JavascriptMode.unrestricted,
-        onWebViewCreated: (controller) {
-        },
-      ),
+    return Stack(
+      children: [
+        WebView(
+          initialUrl: "https://compareprivateplanes.com/about",
+          javascriptMode: JavascriptMode.unrestricted,
+          onWebViewCreated: (controller) {
+          },
+          onPageFinished: (finish) {
+            setState(() {
+              isLoading = false;
+            });
+          },
+        ),
+        isLoading ? Center( child: CircularProgressIndicator(),)
+            : Stack(),
+      ],
     );
   }
 }
@@ -103,15 +115,26 @@ class ContactPage extends StatefulWidget {
 }
 
 class _ContactPageState extends State<ContactPage> {
+  bool isLoading=true;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: WebView(
-        initialUrl: "https://compareprivateplanes.com/contact",
-        javascriptMode: JavascriptMode.unrestricted,
-        onWebViewCreated: (controller) {
-        },
-      ),
+    return Stack(
+      children: [
+        WebView(
+          initialUrl: "https://compareprivateplanes.com/contact",
+          javascriptMode: JavascriptMode.unrestricted,
+          onWebViewCreated: (controller) {
+          },
+          onPageFinished: (finish) {
+            setState(() {
+              isLoading = false;
+            });
+          },
+        ),
+        isLoading ? Center( child: CircularProgressIndicator(),)
+            : Stack(),
+      ],
     );
   }
 }

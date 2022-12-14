@@ -1,14 +1,15 @@
+
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class FreeToolsPage extends StatefulWidget {
-  const FreeToolsPage({Key? key}) : super(key: key);
+class MainArticles extends StatefulWidget {
+  const MainArticles({Key? key}) : super(key: key);
 
   @override
-  State<FreeToolsPage> createState() => _FreeToolsPageState();
+  State<MainArticles> createState() => _MainArticlesState();
 }
 
-class _FreeToolsPageState extends State<FreeToolsPage> {
+class _MainArticlesState extends State<MainArticles> {
   bool isLoading=true;
 
   @override
@@ -26,7 +27,7 @@ class _FreeToolsPageState extends State<FreeToolsPage> {
           children: [
             Expanded(
               child: WebView(
-                initialUrl: 'https://compareprivateplanes.com/private-jet-free-tools',
+                initialUrl: 'https://compareprivateplanes.com/all-articles',
                 javascriptMode: JavascriptMode.unrestricted,
                 onWebViewCreated: (WebViewController webViewController) {
                   _controller = webViewController;

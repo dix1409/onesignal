@@ -143,6 +143,11 @@ class _SettingsState extends State<Settings> {
                 final prefs = await SharedPreferences.getInstance();
                 prefs.remove("wifi");
                 prefs.remove("notification");
+                setState(() {
+                  notificationIsWork = false;
+                  wifiOnyIsWork = false;
+
+                });
               }, child: Text("Delete All Data",style: TextStyle(color : Colors.white,fontWeight: FontWeight.bold,fontSize: 20),)),
             ),
           ),

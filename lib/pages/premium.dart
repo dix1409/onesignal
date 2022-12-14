@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class Premium extends StatefulWidget {
   const Premium({Key? key}) : super(key: key);
@@ -9,16 +10,51 @@ class Premium extends StatefulWidget {
 }
 
 class _PremiumState extends State<Premium> {
-
+  bool isLoading=true;
   @override
   void initState() {
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    return Column(
+    WebViewController _controller;
+
+
+    return Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(MediaQuery.of(context).padding.top),
+          child: SizedBox(
+            height: MediaQuery.of(context).padding.top,
+          ),
+        ),
+        body: Stack(
+          children: [
+            Expanded(
+              child: WebView(
+                initialUrl: 'https://compareprivateplanes.com/sign-in',
+                javascriptMode: JavascriptMode.unrestricted,
+                onWebViewCreated: (WebViewController webViewController) {
+                  _controller = webViewController;
+                },
+                onPageFinished: (finish) {
+                  setState(() {
+                    isLoading = false;
+                  });
+                },
+              ),
+            ),
+            isLoading ? Center( child: CircularProgressIndicator(),)
+                : Stack(),
+          ],
+        )
+    );
+  }
+}
+
+/*
+* Column(
       children: [
-        SizedBox(
+        /*SizedBox(
           width: MediaQuery.of(context).size.width,
           height: 100,
           child: Stack(
@@ -41,8 +77,20 @@ class _PremiumState extends State<Premium> {
                   ))
             ],
           ),
-        ),
+        ),*/
+        Column(
+          children: [
+            Expanded(
+              child: WebView(
+                initialUrl: 'http://compareprivateplanes.com/sign-in',
+                javascriptMode: JavascriptMode.unrestricted,
+                onWebViewCreated: (WebViewController webViewController) {
+                  _controller = webViewController;
+                },
+              ),
+            ),
+          ],
+        )
+
       ],
-    );
-  }
-}
+    );*/
