@@ -46,7 +46,89 @@ class _SettingsState extends State<Settings> {
 
     return Column(
       children: [
-        SizedBox(
+        Expanded(
+          flex: 17,
+          child: Stack(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image:
+                    AssetImage("assets/images/header_default_image2.png"),
+                  ),
+                ),
+              ),
+              Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Settings",
+                    style:
+                    TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+                  ))
+            ],
+          ),
+        ),
+        Expanded(
+          flex: 30,
+          child: Card(
+              child: SettingsList(
+                sections: [
+                  SettingsSection(
+                    title: Text('Settings'),
+                    tiles: <SettingsTile>[
+                      SettingsTile.switchTile(
+                        onToggle: (value) {
+                          setState(() {
+                            notificationIsWork = value;
+                            saveSettingsData();
+                          });
+                        },
+                        initialValue: notificationIsWork,
+                        leading: Icon(Icons.notifications),
+                        title: Text('Push Notifications'),
+                      ),
+                      SettingsTile.switchTile(
+                        onToggle: (value) {
+                          setState(() {
+                            wifiOnyIsWork = value;
+                            saveSettingsData();
+                          });
+                        },
+                        initialValue: wifiOnyIsWork,
+                        leading: Icon(Icons.wifi),
+                        title: Text('Wi-Fİ Only'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+        ),
+        Expanded(
+          flex: 60,
+          child: Card(
+              child: Column(
+                children: [
+                  Expanded(
+                      flex: 15,
+                      child: Padding(padding: EdgeInsets.all(10.0),  child : Align(alignment: Alignment.topLeft , child : Text("Sign In to Premium",style: TextStyle(fontSize: 20),)))),
+                  Expanded(
+                    flex: 85,
+                    child: WebView(
+                      initialUrl: 'https://compareprivateplanes.com/sign-in',
+                      javascriptMode: JavascriptMode.unrestricted,
+                      onWebViewCreated: (WebViewController webViewController) {
+                        _controller = webViewController;
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+        ),
+
+        /*SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 100,
             child: Stack(
@@ -70,46 +152,10 @@ class _SettingsState extends State<Settings> {
               ],
             ),
           ),
+
         SizedBox(
           width: MediaQuery.of(context).size.width,
-          height: 200,
-          child: Card(
-            child: SettingsList(
-              sections: [
-                SettingsSection(
-                  title: Text('Settings'),
-                  tiles: <SettingsTile>[
-                    SettingsTile.switchTile(
-                      onToggle: (value) {
-                        setState(() {
-                          notificationIsWork = value;
-                          saveSettingsData();
-                        });
-                      },
-                      initialValue: notificationIsWork,
-                      leading: Icon(Icons.notifications),
-                      title: Text('Push Notifications'),
-                    ),
-                    SettingsTile.switchTile(
-                      onToggle: (value) {
-                        setState(() {
-                          wifiOnyIsWork = value;
-                          saveSettingsData();
-                        });
-                      },
-                      initialValue: wifiOnyIsWork,
-                      leading: Icon(Icons.wifi),
-                      title: Text('Wi-Fİ Only'),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-        SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: 350,
+          height: 500,
           child: Card(
             child: Column(
               children: [
@@ -129,8 +175,8 @@ class _SettingsState extends State<Settings> {
               ],
             ),
           ),
-        ),
-        Padding(
+        ),*/
+        /*Padding(
           padding: const EdgeInsets.all(10.0),
           child: Align(
             alignment: Alignment.bottomCenter,
@@ -146,12 +192,12 @@ class _SettingsState extends State<Settings> {
                 setState(() {
                   notificationIsWork = false;
                   wifiOnyIsWork = false;
-
                 });
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Data Of Settings is cleared")));
               }, child: Text("Delete All Data",style: TextStyle(color : Colors.white,fontWeight: FontWeight.bold,fontSize: 20),)),
             ),
           ),
-        )
+        )*/
       ],
     );
   }

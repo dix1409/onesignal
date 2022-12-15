@@ -69,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(icon: Image.asset("icons/home_icon.png",width: 30,height: 30),label: "Home"),
-          BottomNavigationBarItem(icon: Image.asset("icons/aircraft_icon.png",width: 30,height: 30,), label: "AirCraft" ),
+          BottomNavigationBarItem(icon: Image.asset("icons/aircraft_icon.png",width: 30,height: 30,), label: "Aircraft" ),
           BottomNavigationBarItem(icon: Image.asset("icons/articles_icon.png",width: 30,height: 30,), label: "Articles"),
           BottomNavigationBarItem(icon: Image.asset("icons/premium_icon.png",width: 30,height: 30,), label: "Premium"),
           BottomNavigationBarItem(icon: Image.asset("icons/settting_icon.png",width: 30,height: 30,), label: "Settings"),

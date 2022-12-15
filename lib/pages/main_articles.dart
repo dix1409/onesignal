@@ -27,7 +27,7 @@ class _MainArticlesState extends State<MainArticles> {
           children: [
             Expanded(
               child: WebView(
-                initialUrl: 'https://compareprivateplanes.com/all-articles',
+                initialUrl: 'https://compareprivateplanes.com/article-categories',
                 javascriptMode: JavascriptMode.unrestricted,
                 onWebViewCreated: (WebViewController webViewController) {
                   _controller = webViewController;

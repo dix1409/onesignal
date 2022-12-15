@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_button_bar/animated_button_bar.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -18,11 +19,10 @@ class _AboutState extends State<About> {
   @override
   Widget build(BuildContext context) {
 
+
     List<Widget> pages = <Widget>[AboutPage(),ContactPage()];
 
     return Scaffold(
-
-
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(MediaQuery.of(context).padding.top),
         child: SizedBox(

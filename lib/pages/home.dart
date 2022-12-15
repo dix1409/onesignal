@@ -1,9 +1,13 @@
+import 'dart:ffi';
+
 import 'package:compareprivateplanesapp/pages/FreeTools.dart';
 import 'package:compareprivateplanesapp/pages/about.dart';
 import 'package:compareprivateplanesapp/pages/aircraft.dart';
 import 'package:compareprivateplanesapp/pages/articles.dart';
 import 'package:compareprivateplanesapp/pages/premium.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -12,7 +16,18 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
+bool connectCheck = false;
+
 class _HomeState extends State<Home> {
+
+  bool notificationIsWork = false;
+  bool wifiOnyIsWork = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     double widthScreen = MediaQuery.of(context).size.width;
@@ -23,7 +38,7 @@ class _HomeState extends State<Home> {
         SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 120,
-            child: Stack(
+            child:  Stack(
               children: [
                 Container(
                   decoration: BoxDecoration(
@@ -39,7 +54,6 @@ class _HomeState extends State<Home> {
           ),
 
         // Row 1
-
         Padding(
           padding: const EdgeInsets.only(top: 60.0),
           child: Row(
