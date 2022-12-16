@@ -1,4 +1,6 @@
 
+import 'package:compareprivateplanesapp/main.dart';
+import 'package:compareprivateplanesapp/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -11,12 +13,21 @@ class MainArticles extends StatefulWidget {
 
 class _MainArticlesState extends State<MainArticles> {
   bool isLoading=true;
+  late WebViewController _controller;
 
   @override
   Widget build(BuildContext context) {
-    WebViewController _controller;
 
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        if (await _controller.canGoBack()) {
+          print("onwill goback");
+          _controller.goBack();
+        }else{
+        }
+        return false;
+      },
+        child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(MediaQuery.of(context).padding.top),
           child: SizedBox(
@@ -43,6 +54,7 @@ class _MainArticlesState extends State<MainArticles> {
                 : Stack(),
           ],
         )
-    );
+    ));
+
   }
 }

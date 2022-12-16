@@ -30,10 +30,10 @@ class _SettingsState extends State<Settings> {
     getSettingsData();
     super.initState();
   }
+  late  WebViewController _controller;
 
   @override
   Widget build(BuildContext context) {
-    WebViewController _controller;
 
 
     void saveSettingsData() async {
@@ -44,93 +44,18 @@ class _SettingsState extends State<Settings> {
       prefs.commit();
     }
 
-    return Column(
-      children: [
-        Expanded(
-          flex: 17,
-          child: Stack(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image:
-                    AssetImage("assets/images/header_default_image2.png"),
-                  ),
-                ),
-              ),
-              Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Settings",
-                    style:
-                    TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
-                  ))
-            ],
-          ),
-        ),
-        Expanded(
-          flex: 30,
-          child: Card(
-              child: SettingsList(
-                sections: [
-                  SettingsSection(
-                    title: Text('Settings'),
-                    tiles: <SettingsTile>[
-                      SettingsTile.switchTile(
-                        onToggle: (value) {
-                          setState(() {
-                            notificationIsWork = value;
-                            saveSettingsData();
-                          });
-                        },
-                        initialValue: notificationIsWork,
-                        leading: Icon(Icons.notifications),
-                        title: Text('Push Notifications'),
-                      ),
-                      SettingsTile.switchTile(
-                        onToggle: (value) {
-                          setState(() {
-                            wifiOnyIsWork = value;
-                            saveSettingsData();
-                          });
-                        },
-                        initialValue: wifiOnyIsWork,
-                        leading: Icon(Icons.wifi),
-                        title: Text('Wi-Fİ Only'),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-        ),
-        Expanded(
-          flex: 60,
-          child: Card(
-              child: Column(
-                children: [
-                  Expanded(
-                      flex: 15,
-                      child: Padding(padding: EdgeInsets.all(10.0),  child : Align(alignment: Alignment.topLeft , child : Text("Sign In to Premium",style: TextStyle(fontSize: 20),)))),
-                  Expanded(
-                    flex: 85,
-                    child: WebView(
-                      initialUrl: 'https://compareprivateplanes.com/sign-in',
-                      javascriptMode: JavascriptMode.unrestricted,
-                      onWebViewCreated: (WebViewController webViewController) {
-                        _controller = webViewController;
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-        ),
-
-        /*SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 100,
+    return WillPopScope(
+      onWillPop : () async {
+        if (await _controller.canGoBack()) {
+          _controller.goBack();
+        }else{
+        }
+        return false;
+      },
+      child: Column(
+        children: [
+          Expanded(
+            flex: 17,
             child: Stack(
               children: [
                 Container(
@@ -138,7 +63,7 @@ class _SettingsState extends State<Settings> {
                     image: DecorationImage(
                       fit: BoxFit.fill,
                       image:
-                          AssetImage("assets/images/header_default_image2.png"),
+                      AssetImage("assets/images/header_default_image2.png"),
                     ),
                   ),
                 ),
@@ -147,58 +72,142 @@ class _SettingsState extends State<Settings> {
                     child: Text(
                       "Settings",
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
                     ))
               ],
             ),
           ),
-
-        SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: 500,
-          child: Card(
-            child: Column(
-              children: [
-                Expanded(
-                    flex: 15,
-                    child: Padding(padding: EdgeInsets.all(10.0),  child : Align(alignment: Alignment.topLeft , child : Text("Sign In to Premium",style: TextStyle(fontSize: 20),)))),
-                Expanded(
-                  flex: 85,
-                  child: WebView(
-                      initialUrl: 'https://compareprivateplanes.com/sign-in',
-                      javascriptMode: JavascriptMode.unrestricted,
-                      onWebViewCreated: (WebViewController webViewController) {
-                        _controller = webViewController;
-                      },
+          Expanded(
+            flex: 30,
+            child: Card(
+                child: SettingsList(
+                  sections: [
+                    SettingsSection(
+                      title: Text('Settings'),
+                      tiles: <SettingsTile>[
+                        SettingsTile.switchTile(
+                          onToggle: (value) {
+                            setState(() {
+                              notificationIsWork = value;
+                              saveSettingsData();
+                            });
+                          },
+                          initialValue: notificationIsWork,
+                          leading: Icon(Icons.notifications),
+                          title: Text('Push Notifications'),
+                        ),
+                        SettingsTile.switchTile(
+                          onToggle: (value) {
+                            setState(() {
+                              wifiOnyIsWork = value;
+                              saveSettingsData();
+                            });
+                          },
+                          initialValue: wifiOnyIsWork,
+                          leading: Icon(Icons.wifi),
+                          title: Text('Wi-Fİ Only'),
+                        ),
+                      ],
                     ),
+                  ],
                 ),
-              ],
-            ),
+              ),
           ),
-        ),*/
-        /*Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: SizedBox(
+          Expanded(
+            flex: 60,
+            child: Card(
+                child: Column(
+                  children: [
+                    Expanded(
+                        flex: 15,
+                        child: Padding(padding: EdgeInsets.all(10.0),  child : Align(alignment: Alignment.topLeft , child : Text("Sign In to Premium",style: TextStyle(fontSize: 20),)))),
+                    Expanded(
+                      flex: 85,
+                      child: WebView(
+                        initialUrl: 'https://compareprivateplanes.com/sign-in',
+                        javascriptMode: JavascriptMode.unrestricted,
+                        onWebViewCreated: (WebViewController webViewController) {
+                          _controller = webViewController;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+          ),
+
+          /*SizedBox(
               width: MediaQuery.of(context).size.width,
-              height: 50,
-              child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.red,shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20), // <-- Radius
-              ),),onPressed: () async {
-                final prefs = await SharedPreferences.getInstance();
-                prefs.remove("wifi");
-                prefs.remove("notification");
-                setState(() {
-                  notificationIsWork = false;
-                  wifiOnyIsWork = false;
-                });
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Data Of Settings is cleared")));
-              }, child: Text("Delete All Data",style: TextStyle(color : Colors.white,fontWeight: FontWeight.bold,fontSize: 20),)),
+              height: 100,
+              child: Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image:
+                            AssetImage("assets/images/header_default_image2.png"),
+                      ),
+                    ),
+                  ),
+                  Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Settings",
+                        style:
+                            TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+                      ))
+                ],
+              ),
             ),
-          ),
-        )*/
-      ],
+
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 500,
+            child: Card(
+              child: Column(
+                children: [
+                  Expanded(
+                      flex: 15,
+                      child: Padding(padding: EdgeInsets.all(10.0),  child : Align(alignment: Alignment.topLeft , child : Text("Sign In to Premium",style: TextStyle(fontSize: 20),)))),
+                  Expanded(
+                    flex: 85,
+                    child: WebView(
+                        initialUrl: 'https://compareprivateplanes.com/sign-in',
+                        javascriptMode: JavascriptMode.unrestricted,
+                        onWebViewCreated: (WebViewController webViewController) {
+                          _controller = webViewController;
+                        },
+                      ),
+                  ),
+                ],
+              ),
+            ),
+          ),*/
+          /*Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: 50,
+                child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.red,shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20), // <-- Radius
+                ),),onPressed: () async {
+                  final prefs = await SharedPreferences.getInstance();
+                  prefs.remove("wifi");
+                  prefs.remove("notification");
+                  setState(() {
+                    notificationIsWork = false;
+                    wifiOnyIsWork = false;
+                  });
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Data Of Settings is cleared")));
+                }, child: Text("Delete All Data",style: TextStyle(color : Colors.white,fontWeight: FontWeight.bold,fontSize: 20),)),
+              ),
+            ),
+          )*/
+        ],
+      ),
     );
   }
 }

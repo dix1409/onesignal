@@ -2,6 +2,8 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_button_bar/animated_button_bar.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import '../main.dart';
 class About extends StatefulWidget {
   const About({Key? key}) : super(key: key);
 
@@ -82,25 +84,37 @@ class AboutPage extends StatefulWidget {
 class _AboutPageState extends State<AboutPage> {
   bool isLoading=true;
 
-
+  late WebViewController _controller;
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        WebView(
-          initialUrl: "https://compareprivateplanes.com/about",
-          javascriptMode: JavascriptMode.unrestricted,
-          onWebViewCreated: (controller) {
-          },
-          onPageFinished: (finish) {
-            setState(() {
-              isLoading = false;
-            });
-          },
-        ),
-        isLoading ? Center( child: CircularProgressIndicator(),)
-            : Stack(),
-      ],
+    return WillPopScope(
+      onWillPop : () async {
+        if (await _controller.canGoBack()) {
+          _controller.goBack();
+        }else{
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyHomePage(title: ""),));
+        }
+        return false;
+      },
+      child: Stack(
+        children: [
+          WebView(
+            initialUrl: "https://compareprivateplanes.com/about",
+            javascriptMode: JavascriptMode.unrestricted,
+            onWebViewCreated: (controller) {
+              _controller = controller;
+
+            },
+            onPageFinished: (finish) {
+              setState(() {
+                isLoading = false;
+              });
+            },
+          ),
+          isLoading ? Center( child: CircularProgressIndicator(),)
+              : Stack(),
+        ],
+      ),
     );
   }
 }
@@ -116,25 +130,36 @@ class ContactPage extends StatefulWidget {
 
 class _ContactPageState extends State<ContactPage> {
   bool isLoading=true;
-
+  late WebViewController _controller;
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        WebView(
-          initialUrl: "https://compareprivateplanes.com/contact",
-          javascriptMode: JavascriptMode.unrestricted,
-          onWebViewCreated: (controller) {
-          },
-          onPageFinished: (finish) {
-            setState(() {
-              isLoading = false;
-            });
-          },
-        ),
-        isLoading ? Center( child: CircularProgressIndicator(),)
-            : Stack(),
-      ],
+    return WillPopScope(
+      onWillPop : () async {
+        if (await _controller.canGoBack()) {
+          _controller.goBack();
+        }else{
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyHomePage(title: ""),));
+        }
+        return false;
+      },
+      child: Stack(
+        children: [
+          WebView(
+            initialUrl: "https://compareprivateplanes.com/contact",
+            javascriptMode: JavascriptMode.unrestricted,
+            onWebViewCreated: (controller) {
+              _controller = controller;
+            },
+            onPageFinished: (finish) {
+              setState(() {
+                isLoading = false;
+              });
+            },
+          ),
+          isLoading ? Center( child: CircularProgressIndicator(),)
+              : Stack(),
+        ],
+      ),
     );
   }
 }
