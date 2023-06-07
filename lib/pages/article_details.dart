@@ -1,12 +1,12 @@
-import 'package:compareprivateplanesapp/models/Article.dart';
+// import 'package:compareprivateplanesapp/models/pop_up_blocker.dart';
 import 'package:flutter/material.dart';
 
 class ArticleDetails extends StatefulWidget {
+  const ArticleDetails({super.key});
 
-  late Article article;
 
 
-  ArticleDetails(this.article);
+
 
   @override
   State<ArticleDetails> createState() => _ArticleDetailsState();
@@ -17,8 +17,8 @@ class _ArticleDetailsState extends State<ArticleDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
+    return const Scaffold(
+       /*Column(
         children: [
           SafeArea(
             minimum: EdgeInsets.only(top: 40.0),
@@ -53,7 +53,7 @@ class _ArticleDetailsState extends State<ArticleDetails> {
             ),
           ),
         ],
-      ),
+      ),*/
     );
   }
 }

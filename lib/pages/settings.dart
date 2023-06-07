@@ -17,12 +17,10 @@ class _SettingsState extends State<Settings> {
   void getSettingsData() async {
     final prefs = await SharedPreferences.getInstance();
 
-    if (prefs != null) {
-      notificationIsWork = (await prefs.getBool("notification"))!;
-      wifiOnyIsWork = (await prefs.getBool("wifi"))!;
-      setState(() {
-      });
-    }
+    notificationIsWork = (prefs.getBool("notification"))!;
+    wifiOnyIsWork = (prefs.getBool("wifi"))!;
+    setState(() {
+    });
   }
 
   @override
@@ -59,7 +57,7 @@ class _SettingsState extends State<Settings> {
             child: Stack(
               children: [
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     image: DecorationImage(
                       fit: BoxFit.fill,
                       image:
@@ -67,7 +65,7 @@ class _SettingsState extends State<Settings> {
                     ),
                   ),
                 ),
-                Align(
+                const Align(
                     alignment: Alignment.center,
                     child: Text(
                       "Settings",
@@ -78,12 +76,12 @@ class _SettingsState extends State<Settings> {
             ),
           ),
           Expanded(
-            flex: 30,
+            flex: 80,
             child: Card(
                 child: SettingsList(
                   sections: [
                     SettingsSection(
-                      title: Text('Settings'),
+                      title: const Text('Settings'),
                       tiles: <SettingsTile>[
                         SettingsTile.switchTile(
                           onToggle: (value) {
@@ -93,8 +91,8 @@ class _SettingsState extends State<Settings> {
                             });
                           },
                           initialValue: notificationIsWork,
-                          leading: Icon(Icons.notifications),
-                          title: Text('Push Notifications'),
+                          leading: const Icon(Icons.notifications),
+                          title: const Text('Push Notifications'),
                         ),
                         SettingsTile.switchTile(
                           onToggle: (value) {
@@ -104,8 +102,8 @@ class _SettingsState extends State<Settings> {
                             });
                           },
                           initialValue: wifiOnyIsWork,
-                          leading: Icon(Icons.wifi),
-                          title: Text('Wi-Fİ Only'),
+                          leading: const Icon(Icons.wifi),
+                          title: const Text('Wi-Fİ Only'),
                         ),
                       ],
                     ),
@@ -113,12 +111,12 @@ class _SettingsState extends State<Settings> {
                 ),
               ),
           ),
-          Expanded(
+          /*Expanded(
             flex: 60,
             child: Card(
                 child: Column(
                   children: [
-                    Expanded(
+                    *//*Expanded(
                         flex: 15,
                         child: Padding(padding: EdgeInsets.all(10.0),  child : Align(alignment: Alignment.topLeft , child : Text("Sign In to Premium",style: TextStyle(fontSize: 20),)))),
                     Expanded(
@@ -130,11 +128,11 @@ class _SettingsState extends State<Settings> {
                           _controller = webViewController;
                         },
                       ),
-                    ),
+                    ),*//*
                   ],
                 ),
               ),
-          ),
+          ),*/
 
           /*SizedBox(
               width: MediaQuery.of(context).size.width,

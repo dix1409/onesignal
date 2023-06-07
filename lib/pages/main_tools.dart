@@ -7,15 +7,15 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 import '../main.dart';
 
-class MainPremium extends StatefulWidget {
-  const MainPremium({Key? key}) : super(key: key);
+class MainTools extends StatefulWidget {
+  const MainTools({Key? key}) : super(key: key);
 
   @override
-  State<MainPremium> createState() => _MainPremiumState();
+  State<MainTools> createState() => _MainToolsState();
 }
 
-class _MainPremiumState extends State<MainPremium> {
-    WebViewController? _webViewController;
+class _MainToolsState extends State<MainTools> {
+  WebViewController? _webViewController;
   bool isLoading = true;
   final int _selectedIndex = 0;
 
@@ -73,7 +73,7 @@ Page resource error:
         )
         ..loadRequest(
           Uri.parse(
-            UrlsOfWebsite.MAIN_PREMIUM_PAGE_URL,
+            UrlsOfWebsite.MAIN_TOOLS_PAGE_URL,
           ),
         ).then((value) => setState(() => isLoading = false));
     }

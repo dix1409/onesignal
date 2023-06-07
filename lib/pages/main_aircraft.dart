@@ -1,4 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:async';
+
+import 'package:compareprivateplanesapp/utils/UrlsOfWebsite.dart';
+import 'package:compareprivateplanesapp/utils/extentions.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -12,48 +15,96 @@ class MainAircraft extends StatefulWidget {
 }
 
 class _MainAircraftState extends State<MainAircraft> {
-  bool isLoading=true;
-  late WebViewController _controller;
+  WebViewController? _webViewController;
+  bool isLoading = true;
+  final int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MyHomePage(title: "", pageNum: index),
+          ));
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (mounted) {
+      _webViewController = WebViewController();
+      _webViewController!
+        ..setJavaScriptMode(JavaScriptMode.unrestricted)
+        ..setBackgroundColor(const Color(0x00000000))
+        ..setNavigationDelegate(
+          NavigationDelegate(
+            onProgress: (int progress) {
+              debugPrint('WebView is loading (progress : $progress%)');
+            },
+            onPageStarted: (String url) {
+              debugPrint('Page started loading: $url');
+            },
+            onPageFinished: (String url) {
+              debugPrint('Page finished loading: $url');
+            },
+            onWebResourceError: (WebResourceError error) {
+              debugPrint('''
+Page resource error:
+  code: ${error.errorCode}
+  description: ${error.description}
+  errorType: ${error.errorType}
+  isForMainFrame: ${error.isForMainFrame}
+          ''');
+            },
+            onNavigationRequest: (NavigationRequest request) {
+              return NavigationDecision.navigate;
+            },
+            onUrlChange: (UrlChange change) {},
+          ),
+        )
+        ..addJavaScriptChannel(
+          'Toaster',
+          onMessageReceived: (JavaScriptMessage message) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(message.message)),
+            );
+          },
+        )
+        ..loadRequest(
+          Uri.parse(
+            UrlsOfWebsite.MAIN_AIRCRAFT_PAGE_URL,
+          ),
+        ).then((value) => setState(() => isLoading = false));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-
-
     return WillPopScope(
-      onWillPop : () async {
-        if (await _controller.canGoBack()) {
-          _controller.goBack();
-        }else{
-        }
-        return false;
+      onWillPop: () {
+        Navigator.of(context).pop();
+        return Future.value(true);
       },
       child: Scaffold(
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(MediaQuery.of(context).padding.top),
-            child: SizedBox(
-              height: MediaQuery.of(context).padding.top,
-            ),
-          ),
-          body: Stack(
-            children: [
-              Expanded(
-                child: WebView(
-                  initialUrl: 'https://compareprivateplanes.com/find',
-                  javascriptMode: JavascriptMode.unrestricted,
-                  onWebViewCreated: (WebViewController webViewController) {
-                    _controller = webViewController;
-                  },
-                  onPageFinished: (finish) {
-                    setState(() {
-                      isLoading = false;
-                    });
-                  },
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            Navigator.of(context).pop();
+            return Future.value(true);
+          },
+          backgroundColor: '#1E1F4D'.toColor(),
+          child: const Icon(Icons.keyboard_backspace),
+        ),
+        body: SafeArea(
+          child: isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : WebViewWidget(
+                  controller: _webViewController!,
                 ),
-              ),
-              isLoading ? Center( child: CircularProgressIndicator(),)
-                  : Stack(),
-            ],
-          )
+        ),
       ),
     );
   }
